@@ -34,7 +34,7 @@ jobs:
           docker_layer_caching: true # Enable Docker layer caching if needed
       - run:
           name: List Workspace Contents
-          command: ls -la /home/circleci/project/pingpong
+          command: ls -la /home/circleci
       - run:
           name: Push image to Docker Hub
           command: |
@@ -44,7 +44,7 @@ jobs:
             docker push demodynamics/webserver:1.0.0
 
 workflows:
-  build-deploy:
+  build-push:
     jobs:
       - build
       - push
