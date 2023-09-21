@@ -1,0 +1,50 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: cimg/node:20.6.0
+    steps:
+      - checkout
+      - run:
+          name: Install rsync
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y rsync
+      - run:
+          name: Copy all files and folders to /home/circleci/project/pingpong
+          command: rsync -avz $HOME/project/ /home/circleci/project/pingpong # $HOME = /home/circleci
+      - run:
+          name: Install Dependencies
+          command: |
+            cd /home/circleci/project/pingpong
+            npm install
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - . # This includes all files and subdirectories in the specified path
+
+  push:
+    docker:
+      - image: cimg/base:2023.08
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+      - setup_remote_docker:
+          version: "20.10.11"
+          docker_layer_caching: true # Enable Docker layer caching if needed
+      - run:
+          name: List Workspace Contents
+          command: ls -la /home/circleci/project/pingpong
+      - run:
+          name: Push image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            cd /home/circleci/project/pingpong
+            docker build -t demodynamics/webserver:1.0.0 .
+            docker push demodynamics/webserver:1.0.0
+
+workflows:
+  build-deploy:
+    jobs:
+      - build
+      - push
