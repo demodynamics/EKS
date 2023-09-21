@@ -11,8 +11,18 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y rsync
       - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME:"
+            ls -la $HOME      
+      - run:
           name: Copy all files and folders to /home/circleci/project/pingpong
           command: rsync -avz $HOME/project/ /home/circleci/project/pingpong # $HOME = /home/circleci
+      - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME:"
+            ls -la $HOME
       - run:
           name: Install Dependencies
           command: |
@@ -22,6 +32,11 @@ jobs:
           root: /home/circleci
           paths:
             - . # This includes all files and subdirectories in the specified path
+      - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME:"
+            ls -la $HOME/project/pingpong
 
   push:
     docker:
@@ -34,7 +49,7 @@ jobs:
           docker_layer_caching: true # Enable Docker layer caching if needed
       - run:
           name: List Workspace Contents
-          command: ls -la /home/circleci
+          command: ls -la /home/circleci/project/pingpong
       - run:
           name: Push image to Docker Hub
           command: |
@@ -47,4 +62,7 @@ workflows:
   build-push:
     jobs:
       - build
-      - push
+      - push:
+          requires:
+            - build
+
