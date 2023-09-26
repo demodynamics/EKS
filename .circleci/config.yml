@@ -75,8 +75,13 @@ jobs:
           name: Copy kubeconfig for Frontend Deployment
           command: cp /home/circleci/project/pingpong/kubeconfig.yaml $HOME/.kube/config
       - run:
+          name: Install AWS CLI
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y awscli2    
+      - run:
           name: Use kubeconfig for Frontend Deployment
-          command: kubectl apply -f /home/circleci/project/pingpong/deployment.yaml # Укажите путь к файлу деплоя фронтенда          
+          command: kubectl apply -f /home/circleci/project/pingpong/deployment.yaml      
 
 workflows:
   build-push:
