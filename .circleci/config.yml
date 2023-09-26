@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  kubernetes: circleci/kubernetes@1.3.1
 jobs:
   build:
     docker:
@@ -28,6 +30,9 @@ jobs:
           command: |
             cd /home/circleci/project/pingpong
             npm install
+      - run:
+          name: Create kubeconfig directory if not exists
+          command: mkdir -p /home/circleci/.kube      
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -58,6 +63,21 @@ jobs:
             docker build -t demodynamics/webserver:1.0.0 .
             docker push demodynamics/webserver:1.0.0
 
+
+  deploy:
+    docker:
+      - image: cimg/base:2023.08
+    steps:
+      - kubernetes/install-kubectl
+      - attach_workspace:
+          at: /home/circleci
+      - run:
+          name: Copy kubeconfig for Frontend Deployment
+          command: cp /home/circleci/project/pingpong/kubeconfig.yaml $HOME/.kube/config
+      - run:
+          name: Use kubeconfig for Frontend Deployment
+          command: kubectl apply -f /home/circleci/project/pingpong/deployment.yaml # Укажите путь к файлу деплоя фронтенда          
+
 workflows:
   build-push:
     jobs:
@@ -65,4 +85,7 @@ workflows:
       - push:
           requires:
             - build
+      - deploy:
+          requires:
+            - push
 
