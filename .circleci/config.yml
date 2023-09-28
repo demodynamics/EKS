@@ -70,7 +70,7 @@ jobs:
           at: /home/circleci
       - run:
           name: Copy kubeconfig
-          command: cp $HOME/project/pingpong/kubeconfig.yaml $HOME/.kube/config
+          command: cp /home/circleci/project/pingpong/kubeconfig.yaml $HOME/.kube/config
       - run:
           name: Deploy with Helm
           command: |
@@ -79,8 +79,6 @@ jobs:
             export KUBE_NAMESPACE=default
             helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE --kube-context $KUBE_CONTEXT
             
-
-           
 
 workflows:
   build-push:
