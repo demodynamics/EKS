@@ -72,6 +72,13 @@ jobs:
           name: Copy kubeconfig
           command: cp /home/circleci/project/pingpong/kubeconfig.yaml /home/circleci/.kube/config
       - run:
+          name: Install Helm
+          command: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            helm version  # Check Helm version to verify installation    
+      - run:
           name: Deploy with Helm
           command: |
             export HELM_RELEASE_NAME=$(cat /home/circleci/project/pingpong/webserver/Chart.yaml | grep -m 1 name: | awk '{print $2}')
