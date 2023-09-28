@@ -27,12 +27,12 @@ service:
 annotations:
   service.beta.kubernetes.io/aws-load-balancer-type: nlb
 
-labels: 
-  app.kubernetes.io/name: webserver
+#labels:
+  #app.kubernetes.io/name: webserver
   
-matchLabels:
-  app.kubernetes.io/name: webserver
+#matchLabels:
+  #app.kubernetes.io/name: webserver
 
-selector:
-  app.kubernetes.io/name: webserver
+#selector:
+  #app.kubernetes.io/name: webserver
 

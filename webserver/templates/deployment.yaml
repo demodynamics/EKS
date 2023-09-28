@@ -5,11 +5,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{- toYaml .Values.matchLabels | nindent 6 }}
+      app: {{ .Values.deployment.name }}
   template:
     metadata:
       labels:
-        app: {{- toYaml .Values.labels | nindent 8 }}
+        app: {{ .Values.deployment.name }}
     spec:
       containers:
         - name: {{ .Values.containers.name }}
