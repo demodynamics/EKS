@@ -13,7 +13,7 @@ containers:
 resources:
   limits:
     cpu: 256m
-    memory: 512i
+    memory: 512Mi
   requests:
     cpu: 256m
     memory: 512Mi
