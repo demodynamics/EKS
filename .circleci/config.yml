@@ -77,8 +77,7 @@ jobs:
             export HELM_RELEASE_NAME=$(cat /home/circleci/project/pingpong/webserver/Chart.yaml | grep -m 1 name: | awk '{print $2}')
             export HELM_CHART_PATH="/home/circleci/project/pingpong/webserver"
             export KUBE_NAMESPACE=default
-            export KUBE_CONTEXT="arn:aws:eks:us-east-1:218347759346:cluster/demo"
-            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE --kube-context $KUBE_CONTEXT 
+            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE
             
 
 workflows:
