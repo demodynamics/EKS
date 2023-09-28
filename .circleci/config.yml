@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  kubernetes: circleci/kubernetes@1.3.1
 jobs:
   build:
     docker:
@@ -19,7 +17,7 @@ jobs:
             ls -la $HOME      
       - run:
           name: Copy all files and folders to /home/circleci/project/pingpong
-          command: rsync -avz $HOME/project/ /home/circleci/project/pingpong # $HOME = /home/circleci
+          command: rsync -avz $HOME/project/ $HOME/project/pingpong # $HOME = /home/circleci
       - run:
           name: Debug Home Directory
           command: |
@@ -28,11 +26,11 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            cd /home/circleci/project/pingpong
+            cd $HOME/project/pingpong
             npm install
       - run:
           name: Create kubeconfig directory if not exists
-          command: mkdir -p /home/circleci/.kube      
+          command: mkdir -p $HOME/.kube      
       - persist_to_workspace:
           root: /home/circleci
           paths:
@@ -66,27 +64,23 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/base:2023.08
+      - image: alpine/helm:3.11.1
     steps:
-      - kubernetes/install-kubectl
       - attach_workspace:
           at: /home/circleci
       - run:
-          name: Copy kubeconfig for Frontend Deployment
-          command: cp /home/circleci/project/pingpong/kubeconfig.yaml $HOME/.kube/config
+          name: Copy kubeconfig
+          command: cp $HOME/project/pingpong/kubeconfig.yaml $HOME/.kube/config
       - run:
-          name: Install AWS CLI
+          name: Deploy with Helm
           command: |
-            sudo apt-get update
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-            aws configure set default.region $AWS_DEFAULT_REGION    
-      - run:
-          name: Use kubeconfig for Frontend Deployment
-          command: kubectl apply -f /home/circleci/project/pingpong/deployment.yaml      
+            export HELM_RELEASE_NAME=$(cat $HOME/project/pingpong/webserver/Chart.yaml | grep -m 1 name: | awk '{print $2}')
+            export HELM_CHART_PATH="$HOME/project/pingpong/webserver"
+            export KUBE_NAMESPACE=default
+            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE --kube-context $KUBE_CONTEXT
+            
+
+           
 
 workflows:
   build-push:

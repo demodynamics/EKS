@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{- toYaml .Values.matchLabels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{- toYaml .Values.labels | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.containers.name }}
+          image: "{{ .Values.containers.image }}:{{ .Values.containers.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources: 
+            {{- toYaml .Values.resources | nindent 12 }}
