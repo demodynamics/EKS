@@ -70,7 +70,7 @@ jobs:
           at: /home/circleci
       - run:
           name: Copy kubeconfig
-          command: cp /home/circleci/project/pingpong/kubeconfig.yaml $HOME/.kube/config
+          command: cp /home/circleci/project/pingpong/kubeconfig.yaml /home/circleci/.kube/config
       - run:
           name: Deploy with Helm
           command: |
