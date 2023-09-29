@@ -9,5 +9,5 @@ spec:
     app: {{ .Values.deployment.name }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+      targetPort: {{ .Values.service.port }}
   

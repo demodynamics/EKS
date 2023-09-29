@@ -12,7 +12,7 @@ spec:
         app: {{ .Values.deployment.name }}
     spec:
       containers:
-        - name: {{ .Values.containers.name }}
+        - name: {{ .Values.deployment.name }}
           image: "{{ .Values.containers.image }}:{{ .Values.containers.tag }}"
           imagePullPolicy:  {{ .Values.containers.imagePullPolicy }}
           ports:

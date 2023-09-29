@@ -1,4 +1,5 @@
 version: 2.1
+
 jobs:
   build:
     docker:
@@ -11,18 +12,8 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y rsync
       - run:
-          name: Debug Home Directory
-          command: |
-            echo "Contents of $HOME:"
-            ls -la $HOME      
-      - run:
           name: Copy all files and folders to /home/circleci/project/pingpong
-          command: rsync -avz $HOME/project/ $HOME/project/pingpong # $HOME = /home/circleci
-      - run:
-          name: Debug Home Directory
-          command: |
-            echo "Contents of $HOME:"
-            ls -la $HOME
+          command: rsync -avz $HOME/project/ $HOME/project/pingpong
       - run:
           name: Install Dependencies
           command: |
@@ -30,50 +21,29 @@ jobs:
             npm install
       - run:
           name: Create kubeconfig directory if not exists
-          command: mkdir -p $HOME/.kube      
+          command: mkdir -p $HOME/.kube
       - persist_to_workspace:
           root: /home/circleci
           paths:
-            - . # This includes all files and subdirectories in the specified path
-      - run:
-          name: Debug Home Directory
-          command: |
-            echo "Contents of $HOME:"
-            ls -la $HOME/project/pingpong
+            - .
 
-  push:
+  push-deploy:
     docker:
       - image: cimg/base:2023.08
     steps:
       - attach_workspace:
-          at: /home/circleci
+          at: /home/circleci   
+      
       - setup_remote_docker:
           version: "20.10.11"
-          docker_layer_caching: true # Enable Docker layer caching if needed
-      - run:
-          name: List Workspace Contents
-          command: ls -la /home/circleci/project/pingpong
-      - run:
-          name: Push image to Docker Hub
-          command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            cd /home/circleci/project/pingpong
-            docker build -t demodynamics/webserver:1.0.0 .
-            docker push demodynamics/webserver:1.0.0
-
-
-  deploy:
-    docker:
-      - image: cimg/base:2023.09
-    steps:
-      - attach_workspace:
-          at: /home/circleci
+          docker_layer_caching: true
+      
       - run:
           name: Copy kubeconfig
           command: | 
             cp /home/circleci/project/pingpong/kubeconfig.yaml /home/circleci/.kube/config
-            chmod 600 ~/.kube/config
-     
+            chmod 600 ~/.kube/config    
+      
       - run:
           name: Install AWS CLI
           command: |
@@ -82,31 +52,41 @@ jobs:
             unzip awscliv2.zip
             sudo ./aws/install    
             aws configure set region us-east-1
-            aws eks update-kubeconfig --name demo
+            aws eks update-kubeconfig --name demo      
+      
+      - run:
+          name: Authenticate with AWS ECR
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 218347759346.dkr.ecr.us-east-1.amazonaws.com
+      
+      - run:
+          name: Build and Push image to ECR
+          command: |
+            cd /home/circleci/project/pingpong
+            docker build -t 218347759346.dkr.ecr.us-east-1.amazonaws.com/webserver:1.0.0 .
+            docker push 218347759346.dkr.ecr.us-east-1.amazonaws.com/webserver:1.0.0
+      
       - run:
           name: Install Helm
           command: |
             curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
             chmod 700 get_helm.sh
             ./get_helm.sh
-            helm version  # Check Helm version to verify installation    
+            helm version
+      
       - run:
           name: Deploy with Helm
           command: |
             export HELM_RELEASE_NAME=$(cat /home/circleci/project/pingpong/webserver/Chart.yaml | grep -m 1 name: | awk '{print $2}')
             export HELM_CHART_PATH="/home/circleci/project/pingpong/webserver"
             export KUBE_NAMESPACE=default
-            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE
-            
+            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE      
+
 
 workflows:
-  build-push:
+  build-push-deploy:
     jobs:
       - build
-      - push:
+      - push-deploy:
           requires:
             - build
-      - deploy:
-          requires:
-            - push
-
