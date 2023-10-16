@@ -22,7 +22,7 @@ service_front:
 
       # Ingress Service Values
 ingress:
-  name: nginx-ingress-controller 
+  name: envoy-ingress-controller 
   host: www.alcodostavka-molnia5.ru
   service_name: alco24frontsvc
   service_port: 8080
