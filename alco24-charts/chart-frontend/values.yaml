@@ -18,10 +18,14 @@ containers_front:
 service_front:
   name: alco24frontsvc
   port: 80
+  type: LoadBalancer
+
+annotations:
+  service.beta.kubernetes.io/aws-load-balancer-type: nlb  
 
       # Ingress Service Values
-ingress:
-  name: envoy-ingress-controller 
-  host: www.alcodostavka-molnia5.ru
-  path: "/"
-  path_type: Prefix
+# ingress:
+#   name: envoy-ingress-controller 
+#   host: www.alcodostavka-molnia5.ru
+#   path: "/"
+#   path_type: Prefix
