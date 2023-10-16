@@ -27,4 +27,4 @@ ingress:
   service_name: alco24frontsvc
   service_port: 8080
   path: /
-  path_type: prefix
+  path_type: Prefix
