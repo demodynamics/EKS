@@ -5,10 +5,10 @@ deployment_front:
 resources_front:
   limits:
     cpu: 512m
-    memory: 384Mi
+    memory: 640Mi
   requests:
-    cpu: 384m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
 containers_front:
   image: public.ecr.aws/b5z4b9g5/alcodostavka24-front-repo
   tag: "1.0.0"
@@ -17,7 +17,7 @@ containers_front:
       # Front End Service Values
 service_front:
   name: alco24frontsvc
-  port: 8080
+  port: 80
   targetPort: 3000
 
       # Ingress Service Values
@@ -25,6 +25,6 @@ ingress:
   name: envoy-ingress-controller 
   host: www.alcodostavka-molnia5.ru
   service_name: alco24frontsvc
-  service_port: 8080
+  service_port: 80
   path: "/"
   path_type: Prefix
