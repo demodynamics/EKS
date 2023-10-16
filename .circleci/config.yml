@@ -29,6 +29,17 @@ jobs:
           root: /home/circleci
           paths:
             - .
+      - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME/project/"
+            ls -l $HOME/project/
+
+      - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME/project/"
+            ls -l $HOME/project/alco24/            
 
   # push-deploy:
   #   docker:
