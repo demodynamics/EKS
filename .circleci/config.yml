@@ -60,10 +60,10 @@ jobs:
       - run:
           name: Authenticate to AWS ECR , Build and Push image to ECR for app components
           command: |
-            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 453465607768.dkr.ecr.us-east-1.amazonaws.com
+            aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/b5z4b9g5
             cd /home/circleci/project/alco24/myApp/front
-            docker build -t 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0 .
-            docker push 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0
+            docker build -t public.ecr.aws/b5z4b9g5/alcodostavka24-front-repo:1.0.0 .
+            docker push public.ecr.aws/b5z4b9g5/alcodostavka24-front-repo:1.0.0
             
             # for dir in front back front_redir; do
             #   cd "/home/circleci/project/alco24/myApp/$dir"
