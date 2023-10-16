@@ -54,9 +54,9 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install   
-            # Specifying the region for all AWS CLI commands if AWS resources are primarily located in that region 
-            aws configure set region us-east-1 
-            # aws eks update-kubeconfig --name alcodostavka24-cluster // This command neccessary if we have multiple clusters contexts and we need to choose right one to work with     
+            # # Specifying the region for all AWS CLI commands if AWS resources are primarily located in that region 
+            # aws configure set region us-east-1 
+            # # aws eks update-kubeconfig --name alcodostavka24-cluster // This command neccessary if we have multiple clusters contexts and we need to choose right one to work with     
       - run:
           name: Authenticate to AWS ECR , Build and Push image to ECR for app components
           command: |
