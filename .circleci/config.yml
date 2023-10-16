@@ -28,102 +28,91 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci
           paths:
-            - .
+            - .            
+
+  push-deploy:
+    docker:
+      - image: cimg/base:2023.08
+    steps:
+      - attach_workspace:
+          at: /home/circleci   
+      
+      - setup_remote_docker:
+          version: "20.10.11"
+          docker_layer_caching: true
+      
       - run:
-          name: Debug Home Directory
+          name: Copy kubeconfig
+          command: | 
+            cp /home/circleci/project/alco24/kubeconfig.yaml /home/circleci/.kube/config
+            chmod 600 ~/.kube/config    
+      
+      - run:
+          name: Install AWS CLI
           command: |
-            echo "Contents of $HOME/project/"
-            ls -l $HOME/project/
+            sudo apt-get update
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install   
+            # Specifying the region for all AWS CLI commands if AWS resources are primarily located in that region 
+            aws configure set region us-east-1 
+            # aws eks update-kubeconfig --name alcodostavka24-cluster // This command neccessary if we have multiple clusters contexts and we need to choose right one to work with     
+      - run:
+          name: Authenticate to AWS ECR , Build and Push image to ECR for app components
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 453465607768.dkr.ecr.us-east-1.amazonaws.com
+            for dir in front back front_redir; do
+              cd "/home/circleci/project/alco24/myApp/$dir"
+              repo="453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-${dir}-repo:1.0.0"
+              docker build -t "$repo" .
+              docker push "$repo"
+            done    
+      
+      - run:
+          name: Install Helm
+          command: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            helm version
 
       - run:
-          name: Debug Home Directory
+          name: Deploy Database Helm Chart
           command: |
-            echo "Contents of $HOME/project/"
-            ls -l $HOME/project/alco24/            
-
-  # push-deploy:
-  #   docker:
-  #     - image: cimg/base:2023.08
-  #   steps:
-  #     - attach_workspace:
-  #         at: /home/circleci   
-      
-  #     - setup_remote_docker:
-  #         version: "20.10.11"
-  #         docker_layer_caching: true
-      
-  #     - run:
-  #         name: Copy kubeconfig
-  #         command: | 
-  #           cp /home/circleci/project/alco24/kubeconfig.yaml /home/circleci/.kube/config
-  #           chmod 600 ~/.kube/config    
-      
-  #     - run:
-  #         name: Install AWS CLI
-  #         command: |
-  #           sudo apt-get update
-  #           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  #           unzip awscliv2.zip
-  #           sudo ./aws/install   
-  #           # Specifying the region for all AWS CLI commands if AWS resources are primarily located in that region 
-  #           aws configure set region us-east-1 
-  #           # aws eks update-kubeconfig --name alcodostavka24-cluster // This command neccessary if we have multiple clusters contexts and we need to choose right one to work with     
-  #     - run:
-  #         name: Authenticate to AWS ECR , Build and Push image to ECR for app components
-  #         command: |
-  #           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 453465607768.dkr.ecr.us-east-1.amazonaws.com
-  #           for dir in front back front_redir; do
-  #             cd "/home/circleci/project/alco24/myApp/$dir"
-  #             repo="453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-${dir}-repo:1.0.0"
-  #             docker build -t "$repo" .
-  #             docker push "$repo"
-  #           done    
-      
-  #     - run:
-  #         name: Install Helm
-  #         command: |
-  #           curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-  #           chmod 700 get_helm.sh
-  #           ./get_helm.sh
-  #           helm version
-
-  #     - run:
-  #         name: Deploy Database Helm Chart
-  #         command: |
-  #           chart=$(grep -m 1 '^name:' /home/circleci/project/alco24/alco24-charts/chart-postgres-database/Chart.yaml | awk '{print $2}')
-  #           namespace="default"
-  #           release-name="${chart}-release"
-  #           chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
+            chart=$(grep -m 1 '^name:' /home/circleci/project/alco24/alco24-charts/chart-postgres-database/Chart.yaml | awk '{print $2}')
+            namespace="default"
+            release-name="${chart}-release"
+            chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
               
-  #           echo "Deploying $chart with Helm"
-  #           helm upgrade --install $release-name $chart-path --namespace C
+            echo "Deploying $chart with Helm"
+            helm upgrade --install $release-name $chart-path --namespace C
 
-  #            # Wait for the database pod to be in a running state
-  #           kubectl wait --for=condition=Ready pod -l app=postgredb --timeout=90s -n $namespace
+             # Wait for the database pod to be in a running state
+            kubectl wait --for=condition=Ready pod -l app=postgredb --timeout=90s -n $namespace
 
-  #           # Retrieve the name of the database pod
-  #           POSTGRESQL_POD=$(kubectl get pod -l app=postgredb -o json | jq -r '.items[0].metadata.name')
+            # Retrieve the name of the database pod
+            POSTGRESQL_POD=$(kubectl get pod -l app=postgredb -o json | jq -r '.items[0].metadata.name')
             
-  #           # Copy alco.sql into the PostgreSQL pod
-  #           kubectl cp /home/circleci/project/alco24/alco24db.sql $POSTGRESQL_POD:/tmp/
+            # Copy alco.sql into the PostgreSQL pod
+            kubectl cp /home/circleci/project/alco24/alco24db.sql $POSTGRESQL_POD:/tmp/
             
-  #           # Restore database
-  #           kubectl exec -it $POSTGRESQL_POD -- psql -U db_admin -d db_expensive -f /tmp/alco24db.sql
-  #         when: on_success
+            # Restore database
+            kubectl exec -it $POSTGRESQL_POD -- psql -U db_admin -d db_expensive -f /tmp/alco24db.sql
+          when: on_success
            
-  #     - run:
-  #         name: Deploy Helm Charts
-  #         command: |
-  #           charts=("chart-frontend" "chart-backend" "chart-frontend-redirect")
-  #           namespace="default"
-  #           for chart in "${charts[@]}"; do
-  #             release-name="${chart}-release"
-  #             chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
+      - run:
+          name: Deploy Helm Charts
+          command: |
+            charts=("chart-frontend" "chart-backend" "chart-frontend-redirect")
+            namespace="default"
+            for chart in "${charts[@]}"; do
+              release-name="${chart}-release"
+              chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
               
-  #             echo "Deploying $chart with Helm"
-  #             helm upgrade --install $release-name $chart-path --namespace $namespace
-  #           done
-  #         when: on_success  
+              echo "Deploying $chart with Helm"
+              helm upgrade --install $release-name $chart-path --namespace $namespace
+            done
+          when: on_success  
             
 
       # - run:
@@ -139,6 +128,6 @@ workflows:
   build-push-deploy:
     jobs:
       - build
-      # - push-deploy:
-      #     requires:
-      #       - build
+      - push-deploy:
+          requires:
+            - build
