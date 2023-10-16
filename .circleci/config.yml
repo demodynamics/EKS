@@ -64,8 +64,8 @@ jobs:
 
             cd /home/circleci/project/alco24/myApp/front/
             docker build -t alcodostavka24-front-repo .
-            docker tag alcodostavka24-front-repo:1.0.0 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0
-            docker push 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0
+            docker tag alcodostavka24-front-repo:2.0.0 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:2.0.0
+            docker push 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:2.0.0
             
             # for dir in front back front_redir; do
             #   cd "/home/circleci/project/alco24/myApp/$dir"
