@@ -61,58 +61,62 @@ jobs:
           name: Authenticate to AWS ECR , Build and Push image to ECR for app components
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 453465607768.dkr.ecr.us-east-1.amazonaws.com
-            for dir in front back front_redir; do
-              cd "/home/circleci/project/alco24/myApp/$dir"
-              repo="453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-${dir}-repo:1.0.0"
-              docker build -t "$repo" .
-              docker push "$repo"
-            done    
+            cd "/home/circleci/project/alco24/myApp/front
+            docker build -t 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0 .
+            docker push 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo:1.0.0
+            
+            # for dir in front back front_redir; do
+            #   cd "/home/circleci/project/alco24/myApp/$dir"
+            #   repo="453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-${dir}-repo:1.0.0"
+            #   docker build -t "$repo" .
+            #   docker push "$repo"
+            # done    
       
-      - run:
-          name: Install Helm
-          command: |
-            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-            chmod 700 get_helm.sh
-            ./get_helm.sh
-            helm version
+      # - run:
+      #     name: Install Helm
+      #     command: |
+      #       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+      #       chmod 700 get_helm.sh
+      #       ./get_helm.sh
+      #       helm version
 
-      - run:
-          name: Deploy Database Helm Chart
-          command: |
-            chart=$(grep -m 1 '^name:' /home/circleci/project/alco24/alco24-charts/chart-postgres-database/Chart.yaml | awk '{print $2}')
-            namespace="default"
-            release-name="${chart}-release"
-            chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
+      # - run:
+      #     name: Deploy Database Helm Chart
+      #     command: |
+      #       chart=$(grep -m 1 '^name:' /home/circleci/project/alco24/alco24-charts/chart-postgres-database/Chart.yaml | awk '{print $2}')
+      #       namespace="default"
+      #       release-name="${chart}-release"
+      #       chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
               
-            echo "Deploying $chart with Helm"
-            helm upgrade --install $release-name $chart-path --namespace C
+      #       echo "Deploying $chart with Helm"
+      #       helm upgrade --install $release-name $chart-path --namespace C
 
-             # Wait for the database pod to be in a running state
-            kubectl wait --for=condition=Ready pod -l app=postgredb --timeout=90s -n $namespace
+      #        # Wait for the database pod to be in a running state
+      #       kubectl wait --for=condition=Ready pod -l app=postgredb --timeout=90s -n $namespace
 
-            # Retrieve the name of the database pod
-            POSTGRESQL_POD=$(kubectl get pod -l app=postgredb -o json | jq -r '.items[0].metadata.name')
+      #       # Retrieve the name of the database pod
+      #       POSTGRESQL_POD=$(kubectl get pod -l app=postgredb -o json | jq -r '.items[0].metadata.name')
             
-            # Copy alco.sql into the PostgreSQL pod
-            kubectl cp /home/circleci/project/alco24/alco24db.sql $POSTGRESQL_POD:/tmp/
+      #       # Copy alco.sql into the PostgreSQL pod
+      #       kubectl cp /home/circleci/project/alco24/alco24db.sql $POSTGRESQL_POD:/tmp/
             
-            # Restore database
-            kubectl exec -it $POSTGRESQL_POD -- psql -U db_admin -d db_expensive -f /tmp/alco24db.sql
-          when: on_success
+      #       # Restore database
+      #       kubectl exec -it $POSTGRESQL_POD -- psql -U db_admin -d db_expensive -f /tmp/alco24db.sql
+      #     when: on_success
            
-      - run:
-          name: Deploy Helm Charts
-          command: |
-            charts=("chart-frontend" "chart-backend" "chart-frontend-redirect")
-            namespace="default"
-            for chart in "${charts[@]}"; do
-              release-name="${chart}-release"
-              chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
+      # - run:
+      #     name: Deploy Helm Charts
+      #     command: |
+      #       charts=("chart-frontend" "chart-backend" "chart-frontend-redirect")
+      #       namespace="default"
+      #       for chart in "${charts[@]}"; do
+      #         release-name="${chart}-release"
+      #         chart-path="/home/circleci/project/alco24/alco24-charts/${chart}"
               
-              echo "Deploying $chart with Helm"
-              helm upgrade --install $release-name $chart-path --namespace $namespace
-            done
-          when: on_success  
+      #         echo "Deploying $chart with Helm"
+      #         helm upgrade --install $release-name $chart-path --namespace $namespace
+      #       done
+      #     when: on_success  
             
 
       # - run:
