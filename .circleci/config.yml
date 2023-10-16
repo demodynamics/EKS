@@ -72,13 +72,13 @@ jobs:
             #   docker push "$repo"
             # done    
       
-      # - run:
-      #     name: Install Helm
-      #     command: |
-      #       curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-      #       chmod 700 get_helm.sh
-      #       ./get_helm.sh
-      #       helm version
+      - run:
+          name: Install Helm
+          command: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            helm version
 
       # - run:
       #     name: Deploy Database Helm Chart
@@ -119,13 +119,13 @@ jobs:
       #     when: on_success  
             
 
-      # - run:
-      #     name: Deploy Front End with Helm
-      #     command: |
-      #       export HELM_RELEASE_NAME=$(cat /home/circleci/project/alco24/charts/Chart.yaml | grep -m 1 name: | awk '{print $2}')
-      #       export HELM_CHART_PATH="/home/circleci/project/alco24/charts"
-      #       export KUBE_NAMESPACE=default
-      #       helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE      
+      - run:
+          name: Deploy Front End with Helm
+          command: |
+            export HELM_RELEASE_NAME=$(cat /home/circleci/project/alco24/alco24-charts/chart-frontend/Chart.yaml | grep -m 1 name: | awk '{print $2}')
+            export HELM_CHART_PATH="/home/circleci/project/alco24/alco24-charts/chart-frontend"
+            export KUBE_NAMESPACE=default
+            helm upgrade --install $HELM_RELEASE_NAME $HELM_CHART_PATH --namespace $KUBE_NAMESPACE      
 
 
 workflows:
