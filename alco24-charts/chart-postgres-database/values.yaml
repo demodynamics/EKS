@@ -1,0 +1,26 @@
+# Database Deployment Values
+db:
+  name: postgredb    
+  image: postgres
+  imagePullPolicy: IfNotPresent
+db.env:
+  - name: POSTGRES_DB
+    value: db_expensive
+  - name: POSTGRES_PASSWORD
+    value: postgre
+  - name: POSTGRES_USER
+    value: db_admin
+resources_db:
+  limits:
+    cpu: 256m
+    memory: 300Mi
+  requests:
+    cpu: 128m
+    memory: 150Mi
+
+    # Database Service Values
+service_db:
+  name: alco24dbsvc
+  ports:
+    - port: 5432
+      targetPort: 5432     

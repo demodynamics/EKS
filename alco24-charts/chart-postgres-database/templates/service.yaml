@@ -1,0 +1,9 @@
+# Database Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service_db.name }}
+spec:
+  selector:
+    app: {{ .Values.db.name }}
+  ports: {{ - toYaml .Values.service_db.ports | nindent 4 }}

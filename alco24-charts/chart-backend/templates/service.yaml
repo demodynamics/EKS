@@ -1,0 +1,9 @@
+# Back End Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service_back.name }}
+spec:
+  selector:
+    app: {{ .Values.deployment_back.name }}
+  ports: {{ - toYaml .Values.service_back.ports | nindent 4 }}

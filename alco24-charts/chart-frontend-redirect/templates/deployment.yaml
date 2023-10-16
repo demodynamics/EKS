@@ -1,0 +1,21 @@
+# Front End Redirect Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontredirect.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.frontredirect.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontredirect.name }}
+    spec:
+      containers:
+        - name: {{ .Values.frontredirect.name }}
+          image: "{{ .Values.frontredirect.image }}:{{ .Values.frontredirect.tag }}"
+          imagePullPolicy:  {{ .Values.frontredirect.imagePullPolicy }}
+          resources: {{- toYaml .Values.resources_front_redir | nindent 12 }}
+          ports:
+          - containerPort: {{ .Values.frontredirect.port }}

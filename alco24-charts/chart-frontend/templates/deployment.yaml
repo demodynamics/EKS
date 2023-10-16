@@ -1,0 +1,21 @@
+# Front End Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment_front.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment_front.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment_front.name }}
+    spec:
+      containers:
+        - name: {{ .Values.deployment_front.name }}
+          image: "{{ .Values.containers_front.image }}:{{ .Values.containers_front.tag }}"
+          imagePullPolicy:  {{ .Values.containers_front.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.deployment_front.port }}
+          resources: {{- toYaml .Values.resources_front | nindent 12 }}

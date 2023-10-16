@@ -1,0 +1,174 @@
+.div_main {
+    width: 100%;
+}
+
+.div_main_foto {
+    position: relative;
+    margin-top: 58px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    color: white;
+}
+
+.div_main_foto>img {
+    height: auto;
+    width: 100%;
+    filter: brightness(70%);
+}
+
+
+.div_logo_brand>img{
+    justify-self: center;
+    width: 11rem;
+    /* height: 3rem; */
+}
+
+.div_logo_brand2,.div_logo_brand {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+.div_logo_brand2>img{
+    margin-top: 15px;
+    justify-self: center;
+    width: 7rem;
+    /* height: 3.4rem; */
+}
+.div_logo_brand {
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+}
+
+.divText {
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    height: auto;
+    text-align: left;
+    width: calc(200px + (570 - 200) * ((100vw - 320px) / (1800 - 320)));
+    /* height: calc(50px + (129 - 50) * ((100vw - 320px) / (1800 - 320)));  */
+    bottom: calc(5px + (128 - 5) * ((100vw - 320px) / (1800 - 320)));
+    left: calc(8px + (16 - 8) * ((100vw - 320px) / (1800 - 320))); 
+    margin-left: calc(20px + (100 - 20) * ((100vw - 320px) / (1800 - 320)));
+}
+
+.tel_number_main{
+    text-decoration: none;
+    background-color: white;
+    border-radius: 3.275px; 
+    padding: calc(3px + (7 - 3) * ((100vw - 320px) / (1800 - 320)));
+    color: #232323;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(8px + (16 - 8) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.tel_number_main:hover {
+    color: #232323;
+  }
+
+
+.divText>p {
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-size: calc(13px + (34 - 13) * ((100vw - 320px) / (1800 - 320)));
+    color: white;
+    margin-top: calc(5px + (10 - 5) * ((100vw - 320px) / (1800 - 320)));
+    text-align: left;
+
+}
+
+.catalog_h1 {
+    margin-top: 50px;
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(20px + (55 - 20) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+}
+
+.button_telegram,
+.button_one_click {
+    height: 47px;
+    width: 100px;
+}
+
+.telegram_button_icon {
+    font-size: 1rem;
+}
+
+.telegram_icon {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-size: 1.3rem;
+    position: fixed;
+    bottom: 40px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    background: #0088cc;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+}
+img {
+    max-width: 100%; /* Запрещаем изображениям быть шире их реального размера */
+    height: auto; /* Сохраняем соотношение сторон изображений */
+  }
+
+  .modal_main{
+    position: absolute;
+    width: 254px;
+    height: auto; 
+    right: 350px;
+    top: calc(-10px + (80 - 1) * ((100vw - 320px) / (1800 - 320))) !important;
+    border-radius: 10px;
+    background: #FFF; 
+    color: #000;
+    padding: 10px;
+}
+.form>p{
+    font-size: calc(10px + (18 - 10) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    margin-bottom: calc(2px + (10 - 2) * ((100vw - 320px) / (1800 - 320))) !important;
+}
+.modal_main>.form>.checkbox_container{
+    margin: 15px auto 0 auto;
+}
+.modal_main>.form>.modal_button_div{
+    height: calc(1px + (60 - 1) * ((100vw - 320px) / (1800 - 320))) !important;
+}
+.modal_main>.form>.modal_button_div>.button_modal{
+    width: calc(160px + (204 - 160) * ((100vw - 320px) / (1800 - 320))) !important;
+    height: calc(25px + (38 - 25) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-size: calc(17px + (20 - 17) * ((100vw - 320px) / (1800 - 320))) !important;
+  
+}
+
+/* Адаптивный дизайн для маленьких экранов (телефоны и планшеты) */
+@media (max-width: 767px) {
+    .telegram_icon{
+        bottom: 20px;
+    }
+    .divText>p {
+        margin: 0;
+        bottom: 0;
+    }
+   
+    .button_number{
+        height: auto;
+    }
+}
+@media(max-width:1150px){
+    .modal_main{
+        display: none;
+    }
+}

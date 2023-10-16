@@ -1,0 +1,150 @@
+/* Общие стили для Footer */
+.footer {
+  background-color: #887575;
+  color: #fff;
+  padding: 40px 50px;
+  bottom: 0;
+}
+
+.container_footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-md-2, .col-lg-2 {
+  width: 20%; /* Первая и вторая колонки меньше */
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+.col-md-8, .col-lg-8 {
+  width: 60%; /* Третья колонка больше */
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+h4 {
+  font-size: 13px;
+  margin-top: 0;
+}
+
+.footer>p {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: #FFF;
+  font-family: 'Alegreya SC', serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.42px;
+}
+
+
+.tel_number_main_footer {
+  text-decoration: none;
+  background-color: white;
+  border-radius: 3.275px; 
+  padding: 4px;
+  color: #232323;
+  font-family: 'Days One', sans-serif;
+  font-size: 15.57px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  color: #FFF;
+  text-align:start;
+  font-family: 'Alegreya SC', serif;
+  font-size: 19.4px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal; 
+}
+
+.footer_col>li {
+  margin-bottom: 10px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #232323;
+}
+
+.span_age {
+  border-radius: 50%;
+
+  border: 2px solid #fff;
+  padding: 5px;
+  color: #FFF;
+  font-family: 'Alegreya SC', serif;
+  font-size: 14.716px;
+  letter-spacing: 0.655px; 
+}
+
+.age_p > p {
+  font-size: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.copy{
+  text-align: center;
+  color: #FFF;
+  font-family: 'Days One', sans-serif;
+  font-size: 11.265px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal; 
+}
+.logo_footer{
+  height: 30px;
+  width: 130px;
+}
+/* Адаптивный дизайн для маленьких экранов (телефоны и планшеты) */
+@media (max-width: 767px) {
+  .col-md-2, .col-lg-2, .col-md-8, .col-lg-8 {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  ul{
+    font-size: 15px;
+  }
+  .footer{
+    padding: 10px 20px;
+  }
+  .span_age{
+    padding: 2px;
+    font-size: 13px;
+  }
+  .logo_footer{
+    height: 20px;
+    width: 90px;
+  }
+}
+
+/* Адаптивный дизайн для планшетов и больших экранов */
+@media (min-width: 768px) {
+  .col-md-2, .col-lg-2 {
+    width: 25%; /* Первая и вторая колонки меньше */
+  }
+  .col-md-8, .col-lg-8 {
+    width: 50%; /* Третья колонка больше */
+  }
+}

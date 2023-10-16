@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
+
+Host: alcodostavka24.online
+Sitemap: https://alcodostavka24.online/sitemap.xml

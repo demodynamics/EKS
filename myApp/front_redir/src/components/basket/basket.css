@@ -1,0 +1,348 @@
+.bask_container {
+    background-color: white;
+    padding-top: 70px;
+}
+.basket_container_responsive{
+    margin-top: 10px;
+}
+
+.table_div {
+    margin: 0 auto;
+    width: calc(80% + (60 - 80) * ((100vw - 320px) / (1800 - 320)));
+    border: 1px solid #000;
+    border-radius: 20px !important;
+}
+
+.basket_table {
+    margin: 0 auto;
+}
+
+.td_name {
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(10px + (15 - 10) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: left !important;
+    padding-left: 5px;
+}
+
+.td_name_div {}
+
+.td_name_div>h6 {
+    color: #000;
+    font-family: 'Alegreya SC', sans-serif;
+    font-size: 10.21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.td_name_div>h4 {
+    color: #000;
+    font-family: 'Alegreya SC', sans-serif;
+    font-size: calc(11px + (15 - 11) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+
+.td_price {
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(12px + (22 - 12) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.td_price>span {
+    color: #000;
+    font-family: 'Alegreya SC', sans-serif;
+    font-size: calc(10px + (17 - 10) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.basket_table td,
+.basket_table th {
+    text-align: center;
+    height: 100px;
+}
+
+.btn_delete {
+    width: calc(40px + (80 - 40) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-size: calc(13px + (16 - 13) * ((100vw - 320px) / (1800 - 320))) !important;
+    background-color: transparent;
+    color: #ff0000;
+}
+
+.p_quantity {
+    color: #F66;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(18px + (22 - 18) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.icon_dash {
+    margin-right: calc(1px + (10 - 1) * ((100vw - 320px) / (1800 - 320)));
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(18px + (22 - 18) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.icon_plus {
+    margin-left: calc(1px + (10 - 1) * ((100vw - 320px) / (1800 - 320)));
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(18px + (22 - 18) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.item_delete {
+    color: #ff0000;
+}
+
+.img_td {
+    width: calc(55px + (82 - 55) * ((100vw - 320px) / (1800 - 320))) !important;
+    height: calc(55px + (82 - 55) * ((100vw - 320px) / (1800 - 320))) !important;
+
+}
+
+.img_td_th {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div_total {
+    height: 50px;
+    text-align: end;
+    justify-content: center;
+    margin-top: 50px;
+    margin-right:calc(15px + (50 - 15) * ((100vw - 320px) / (1800 - 320))) !important;
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(13px + (25 - 13) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.form_basket {
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+    margin-bottom: 130px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: auto auto;
+    grid-gap: 100px;
+    row-gap: 50px;
+
+}
+
+.form-select {
+    margin: 0 auto;
+    width: calc(200px + (420 - 200) * ((100vw - 320px) / (1800 - 320)));
+    height: 60px;
+    border: 1px solid #10a73d;
+}
+
+.basket-title {
+    text-align: center;
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(30px + (44 - 30) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.bask_container>.form-control {
+    height: 30px !important;
+}
+
+.texterea {
+    height: 80px !important;
+    resize: none;
+}
+
+.form-floating>label {
+    color: #000;
+    font-family: 'Alegreya SC';
+    font-size: 12.21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}
+
+#cities {
+    color: #000;
+    font-family: 'Alegreya SC';
+    font-size: 12.21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.form_delivery {
+    margin: 0 auto;
+    width: 300px;
+    height: auto;
+    border-radius: 17px;
+    background: #FFF;
+    box-shadow: 2px 4px 14px 0px rgba(0, 0, 0, 0.25);
+    padding:25px 10px;
+}
+
+.form_delivery>h1 {
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(20px + (25 - 20) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+
+.form-control {
+    margin: 0 auto;
+    width: 100%;
+    border: none;
+
+}
+
+
+.basket-information {
+    align-self: normal;
+    margin-top: 40px;
+}
+
+.basket-information>p {
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-size: calc(15px + (23 - 15) * ((100vw - 320px) / (1800 - 320)));
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.basket-information>h5,
+.basket-information>h1 {
+    align-self: normal;
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-size: calc(13px + (20 - 13) * ((100vw - 320px) / (1800 - 320)));
+}
+
+.close {
+    display: none;
+}
+
+.form_delivery>button {
+    
+    width: calc(200px + (254 - 200) * ((100vw - 320px) / (1800 - 320)));
+    height: 38px;
+    top: 365px;
+    left: 65px;
+    margin-top: 40px;
+    border-radius: 5px;
+    background-color: #C6EB99;
+    border: #C6EB99;
+    font-family: 'Days One', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: black;
+    line-height: 26px;
+
+}
+
+.radios {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 40px;
+    margin-top: 20px;
+    text-align: center;
+    color: #000;
+    font-family: 'Days One', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 100%;
+    align-self: normal;
+    font-size: calc(15px + (23 - 15) * ((100vw - 320px) / (1800 - 320)));
+}
+
+
+.radios>input {
+    margin-left: calc(1px + (60 - 1) * ((100vw - 320px) / (1800 - 320)));
+}
+.span_back{
+    cursor: pointer;
+    margin-left: 25px;
+    margin-bottom: 50px;
+    font-size: 13px;
+}
+@media only screen and (max-width: 710px) {
+    .form_basket {
+        grid-template-columns: auto;
+        margin-bottom: 100px;
+    }
+
+    .basket-information {
+        order: 1;
+        margin: 0 auto;
+
+
+    }
+
+    .form_delivery {
+        order: 2;
+        height: auto;
+    }
+
+}
+
+@media only screen and (max-width: 410px) {
+    .img_td_th {
+        display: none;
+    }
+
+    .td_colSpan {
+        display: none;
+    }
+    
+}
+
+@media (max-width: 767px) {
+    .table_div{
+        width: 95%;
+    }
+}

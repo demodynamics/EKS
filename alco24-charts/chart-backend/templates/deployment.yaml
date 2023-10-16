@@ -1,0 +1,24 @@
+# Back End Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment_back.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment_back.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment_back.name }}
+    spec:
+      containers:
+        - name: {{ .Values.deployment_back.name }}
+          image: "{{ .Values.containers_back.image }}:{{ .Values.containers_back.tag }}"
+          imagePullPolicy:  {{ .Values.containers_back.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.deployment_back.port }}
+          resources: {{- toYaml .Values.resources_back | nindent 12  }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.ConfigMap.name }}

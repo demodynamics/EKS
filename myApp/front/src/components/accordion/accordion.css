@@ -1,0 +1,36 @@
+
+.div_accordion{
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+.accordion{
+    border: none !important;
+}
+.accordion_summary{
+    border-bottom: 1.5px solid #A9E55C !important;
+    background-color: white !important;
+}
+.accordion_header{
+    color: #000 !important;
+    font-family: 'Days One', sans-serif !important;
+    font-size: calc(12px + (30 - 12) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important; 
+}
+.krepki{
+    color: #0400ff !important;
+    text-decoration: underline;
+    font-family: 'Days One', sans-serif !important;
+    font-size: calc(12px + (30 - 12) * ((100vw - 320px) / (1800 - 320))) !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important; 
+    cursor: pointer;
+}
+@media (max-width: 922px) {
+    .div_accordion{
+        width: 100%;
+    }
+}

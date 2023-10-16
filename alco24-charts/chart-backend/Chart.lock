@@ -1,0 +1,6 @@
+dependencies:
+- name: database-dependency
+  repository: file://../chart-postgres-database/
+  version: 0.1.0
+digest: sha256:88906e1f3790532f093f44436fbfc098500c8674be69d28be793bad2438c183e
+generated: "2023-10-15T20:02:52.5268689+04:00"

@@ -1,0 +1,128 @@
+.modal-content {
+    width: 334px;
+    height: auto;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.button_modal {
+    width: 204px;
+    height: 38px;
+    top: 365px;
+    left: 65px;
+    border-radius: 5px;
+    background-color: #C6EB99;
+    border: #C6EB99;
+    font-family: 'Days One', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: black;
+    line-height: 26px;
+
+}
+
+.modal_button_div {
+    height: 60px;
+    text-align: center;
+    justify-content: center;
+
+}
+
+
+.modal_title_div {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-title {
+    color: #000;
+    /* text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+    font-family: 'Days One', sans-serif;
+    font-size: 23.212px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+
+}
+
+.checkbox_container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin: 60px auto 0 auto;
+    /* margin-top: 12px; */
+    cursor: pointer;
+    color: #000;
+    font-family: 'Delius';
+    font-size: 10.21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.checkbox {
+    position: absolute;
+    opacity: 0;
+
+}
+
+.span_checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+    border: 1px solid rgb(124, 119, 119);
+    border-radius: 3px;
+
+}
+
+/* Когда отмечен, то красим в зеленый цвет */
+.checkbox_container .checkbox:checked~.span_checkbox {
+    background-color: #7BCF74;
+    border: none;
+}
+
+/* Создаем когда отмечено (не видно, когда не отмечено) */
+.span_checkbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Показываем когда отмечен */
+.checkbox_container .checkbox:checked~.span_checkbox:after {
+    display: block;
+}
+
+/* Стили индикатора */
+.checkbox_container .span_checkbox:after {
+    left: 9px;
+    top: 3px;
+    width: 8px;
+    height: 15px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+.form-floating{
+    
+    outline: none !important;
+    
+
+}
+
+.form-control:focus {
+    /* border-color: initial;  */
+    box-shadow: none; 
+  }
+.form-control{
+    height: 45px !important;
+    border: 1px solid black !important;
+    border-radius: 10px;
+  }

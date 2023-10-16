@@ -1,0 +1,11 @@
+# Front End Redirect Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service_front_redir.name }}
+spec:
+  selector:
+    app: {{ .Values.service_front_redir.name }}
+  ports:
+  - port: {{ .Values.service_front_redir.port }}
+    targetPort: {{ .Values.service_front_redir.port }}

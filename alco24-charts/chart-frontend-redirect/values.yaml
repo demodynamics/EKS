@@ -1,0 +1,19 @@
+# Front End Redirect Deployment Values
+frontredirect:
+  name: alco24frontredir
+  image: 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front_redir-repo
+  tag: "1.0.0"
+  imagePullPolicy: Always
+  port: 3001        
+resources_front_redir:
+  requests:
+    memory: 64Mi
+    cpu: 128m
+  limits:
+    memory: 128Mi
+    cpu: 256m
+
+    # Front End Redirect Service Values
+service_front_redir:
+  name: alco24frontredirsvc
+  port: 3001

@@ -1,0 +1,31 @@
+# Front End Deployment Values
+deployment_front:
+  name: alco24front
+  port: 3000
+resources_front:
+  limits:
+    cpu: 256m
+    memory: 128Mi
+  requests:
+    cpu: 128m
+    memory: 64Mi
+containers_front:
+  image: 453465607768.dkr.ecr.us-east-1.amazonaws.com/alcodostavka24-front-repo
+  tag: "1.0.0"
+  imagePullPolicy: Always
+
+      # Front End Service Values
+service_front:
+  name: alco24frontsvc
+  ports:
+    - port: 8080
+      targetPort: 3000
+
+      # Ingress Service Values
+ingress:
+  name: alco24-ingress-controller
+  host: alcodostavka-molnia5.ru
+  service_name: alco24frontsvc
+  service_port: 8080
+  path: /
+  path_type: prefix

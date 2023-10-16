@@ -1,0 +1,23 @@
+# Database Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.db.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.name }}
+    spec:
+      containers:
+        - name: {{ .Values.db.name }}
+          image: {{ .Values.db.image }}
+          imagePullPolicy: {{ .Values.db.imagePullPolicy }}
+          env: {{- toYaml .Values.db_env | nindent 12  }}
+          resources: {{- toYaml .Values.resources_db | nindent 12 }}
+          ports:
+            - containerPort: 5432

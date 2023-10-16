@@ -1,0 +1,9 @@
+# Front End Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service_front.name }}
+spec:
+  selector:
+    app: {{ .Values.service_front.name }}
+  ports: {{ .Values.service_front.ports | nindent 4 }}
