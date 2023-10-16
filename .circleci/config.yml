@@ -11,6 +11,12 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y rsync
+
+      - run:
+          name: Debug Home Directory
+          command: |
+            echo "Contents of $HOME/project/"
+            ls -l $HOME/project/
       - run:
           name: Copy all files and folders
           command: |
