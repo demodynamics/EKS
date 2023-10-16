@@ -6,4 +6,6 @@ metadata:
 spec:
   selector:
     app: {{ .Values.service_front.name }}
-  ports: {{ .Values.service_front.ports | nindent 4 }}
+  ports:
+    - port:  {{ .Values.service_front.port }}
+      targetPort:  {{ .Values.service_front.targetPort }}

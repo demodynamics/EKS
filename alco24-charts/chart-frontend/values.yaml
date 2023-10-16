@@ -17,9 +17,8 @@ containers_front:
       # Front End Service Values
 service_front:
   name: alco24frontsvc
-  ports:
-    - port: 8080
-      targetPort: 3000
+  port: 8080
+  targetPort: 3000
 
       # Ingress Service Values
 ingress:
