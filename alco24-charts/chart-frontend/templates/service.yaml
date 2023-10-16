@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.service_front.name }}
 spec:
   selector:
-    app: {{ .Values.service_front.name }}
+    app: {{ .Values.deployment_front.name }}
   ports:
     - port:  {{ .Values.service_front.port }}
       targetPort:  {{ .Values.service_front.targetPort }}
