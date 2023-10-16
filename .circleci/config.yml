@@ -46,7 +46,7 @@ jobs:
           command: | 
             cp /home/circleci/project/alco24/kubeconfig.yaml /home/circleci/.kube/config
             chmod 600 ~/.kube/config    
-      
+
       - run:
           name: Install AWS CLI
           command: |
@@ -133,5 +133,6 @@ workflows:
     jobs:
       - build
       - push-deploy:
+          context: AWS - Admin
           requires:
             - build
