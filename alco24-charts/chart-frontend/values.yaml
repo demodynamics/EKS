@@ -18,13 +18,10 @@ containers_front:
 service_front:
   name: alco24frontsvc
   port: 80
-  targetPort: 3000
 
       # Ingress Service Values
 ingress:
   name: envoy-ingress-controller 
   host: www.alcodostavka-molnia5.ru
-  service_name: alco24frontsvc
-  service_port: 80
   path: "/"
   path_type: Prefix
