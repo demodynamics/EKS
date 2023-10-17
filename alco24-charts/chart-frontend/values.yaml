@@ -4,11 +4,11 @@ deployment_front:
   port: 3000
 resources_front:
   limits:
-    cpu: 512m
+    cpu: 812m
     memory: 1024Mi
   requests:
     cpu: 500m
-    memory: 1024Mi
+    memory: 900Mi
 containers_front:
   image: public.ecr.aws/b5z4b9g5/alcodostavka24-front-repo
   tag: "1.0.0"
