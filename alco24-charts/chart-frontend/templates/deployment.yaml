@@ -18,4 +18,5 @@ spec:
           imagePullPolicy:  {{ .Values.containers_front.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.deployment_front.port }}
-          resources: {{- toYaml .Values.resources_front | nindent 12 }}
+          resources: 
+            {{- toYaml .Values.resources_front | nindent 12 }}

@@ -3,7 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.service_front.name }}
-  annotations: {{- toYaml .Values.annotations | nindent 4 }}
+  annotations: 
+    {{- toYaml .Values.annotations | nindent 4 }}
 spec:
   type: {{ .Values.service_front.type }}
   selector:
