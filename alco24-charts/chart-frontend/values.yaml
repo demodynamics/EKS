@@ -5,11 +5,11 @@ deployment_front:
 
 resources_front:
   limits:
-    cpu: 1
-    memory: 1.5Gi
+    cpu: 512m
+    memory: 256Mi
   requests:
-    cpu: 1
-    memory: 1Gi
+    cpu: 256m
+    memory: 128Mi
     
 containers_front:
   image: public.ecr.aws/b5z4b9g5/alcodostavka24-front-repo
